@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DoctorAI - Your AI Health Companion</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style/style.css">
+</head>
+<body class="bg-gray-900 text-white flex items-center justify-center min-h-screen p-4">
+
+    <div class="w-full max-w-7xl h-full lg:h-[90vh] flex flex-col lg:flex-row gap-6">
+
+        <!-- Left Column: Chatbot -->
+        <div class="w-full lg:w-1/2 h-full lg:max-h-[90vh] flex flex-col bg-gray-800 rounded-2xl shadow-2xl border border-gray-700">
+            <!-- Header -->
+            <header class="bg-gray-700 p-4 rounded-t-2xl shadow-md text-center flex-shrink-0">
+                <h1 class="text-2xl font-bold text-teal-400">DoctorAI</h1>
+                <p class="text-sm text-gray-400">Powered by Generative AI</p>
+            </header>
+
+            <!-- Chat Window -->
+            <main id="chat-window" class="flex-1 p-6 overflow-y-auto space-y-6 custom-scrollbar">
+                <!-- Initial Bot Message -->
+                <div class="chat-bubble bot-bubble flex justify-start">
+                    <div class="bg-gray-700 text-white p-4 rounded-2xl max-w-lg shadow-md">
+                        <p class="font-medium">Hello there! 👋</p>
+                        <p class="mt-1 text-gray-300">I am DoctorAI, your AI health companion. How can I help you today? You can ask me about health problems like "headache" or "sore throat."</p>
+                    </div>
+                </div>
+                 <!-- Typing indicator will be added here -->
+            </main>
+
+            <!-- Input Form -->
+            <footer class="p-4 bg-gray-800 rounded-b-2xl flex-shrink-0">
+                <form id="chat-form" class="flex items-center space-x-4">
+                    <input
+                        type="text"
+                        id="message-input"
+                        placeholder="Ask about a health problem..."
+                        autocomplete="off"
+                        class="flex-1 p-3 bg-gray-700 rounded-full border border-gray-600 focus:outline-none focus:ring-2 focus:ring-teal-500 text-white placeholder-gray-400 disabled:opacity-50"
+                    >
+                    <button type="submit" id="send-button" class="bg-teal-500 hover:bg-teal-600 text-white font-bold p-3 rounded-full transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-teal-400 focus:ring-offset-2 focus:ring-offset-gray-800 disabled:opacity-50">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" />
+                        </svg>
+                    </button>
+                </form>
+                <p class="text-xs text-gray-500 text-center mt-4 px-4">
+                    <strong>Disclaimer:</strong> DoctorAI is an AI assistant and not a medical professional. Always consult a qualified doctor for any health concerns.
+                </p>
+            </footer>
+        </div>
+
+        <!-- Right Column: Information & History -->
+        <aside class="w-full lg:w-1/2 h-[70vh] lg:h-full flex flex-col bg-gray-800 rounded-2xl shadow-2xl border border-gray-700">
+            <header class="bg-gray-700 p-4 rounded-t-2xl shadow-md text-center flex-shrink-0">
+                <h2 class="text-2xl font-bold text-teal-400">Health Information Hub</h2>
+                <p class="text-sm text-gray-400">Details Appear Here</p>
+            </header>
+            <div id="info-content" class="p-6 overflow-y-auto custom-scrollbar space-y-6">
+                <!-- Dynamic content will be loaded here -->
+                 <div class="p-4 bg-gray-700 rounded-lg text-center">
+                    <h3 class="font-bold text-lg text-teal-300">Welcome!</h3>
+                    <p class="mt-2 text-gray-300 text-sm">Ask me about a health condition in the chat, and detailed information about it will appear here.</p>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <script src="js/script.js">async function sendMessage() {
+    const userInput = document.getElementById("userInput").value;
+
+    const response = await fetch("/chat", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ message: userInput })
+    });
+
+    const data = await response.json();
+    console.log(data.reply);
+  }</script>
+</body>
+</html>
